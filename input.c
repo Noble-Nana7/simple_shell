@@ -28,6 +28,7 @@ char *read_in(void)
  * @cmd: The command to execute.
  */
 
+
 void exec_command(char *cmd)
 {
 	pid_t pid;
@@ -76,6 +77,12 @@ char *trim_ws(char *str)
 	{
 		start++;
 	}
+
+	if (*start == '0')
+	{
+		return (start);
+	}
+
 	end = start + strlen(start) - 1;
 	while (end > start && isspace((unsigned char)*end))
 	{

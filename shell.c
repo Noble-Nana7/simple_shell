@@ -7,6 +7,7 @@
 void shell(void)
 {
 	char *line;
+	char *trline;
 
 	while (1)
 	{
@@ -21,11 +22,11 @@ void shell(void)
 			exit(EXIT_SUCCESS);
 		}
 
-		line = trim_ws(line);
+		trline = trim_ws(line);
 
-		if (line[0] != '\0')
+		if (trline[0] != '\0')
 		{
-			exec_command(line);
+			exec_command(trline);
 		}
 
 		free(line);
