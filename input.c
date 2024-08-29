@@ -44,10 +44,10 @@ void exec_command(char *cmd)
 	}
 	if (pid == 0)
 	{
-		if (execve(cmd, argv, NULL) == -1)
+		if (execvp(cmd, argv) == -1)
 		{
 			printerr(cmd);
-			exit(EXIT_SUCCESS);
+			exit(EXIT_FAILURE);
 		}
 	}
 	else
