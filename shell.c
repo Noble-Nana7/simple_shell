@@ -16,7 +16,7 @@ void shell(void)
 		if (line == NULL)
 		{
 			perror("read_in");
-			continue;
+			exit(1);
 		}
 
 		if (line[0] != '\0')
