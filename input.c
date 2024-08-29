@@ -31,31 +31,23 @@ char *read_in(void)
 void exec_command(char *cmd)
 {
 	pid_t pid;
-	char *argv[64];
-	char *token;
-	int i = 0;
+	char *argv[2];
 
-	token = strtok(cmd, " ");
-	while (token != NULL && i < 63)
-	{
-		argv[i++] = token;
-		token = strtok(NULL, " ");
-	}
-
+	argv[0] = cmd;
 	argv[1] = NULL;
 
 	pid = fork();
 	if (pid == -1)
 	{
-		perror("fork");
-		exit(-1);
+		printerr("fork");
+		exit(EXIT_FAILURE);
 	}
 	if (pid == 0)
 	{
 		if (execve(cmd, argv, NULL) == -1)
 		{
-			perror (argv[0]);
-			exit(-1);
+			printerr(cmd);
+			exit(EXIT_SUCCESS);
 		}
 	}
 	else

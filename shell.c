@@ -18,7 +18,7 @@ void shell(void)
 		line = read_in();
 		if (line == NULL)
 		{
-			exit(1);
+			exit(EXIT_SUCCESS);
 		}
 
 		line = trim_ws(line);
