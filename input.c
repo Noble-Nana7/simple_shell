@@ -51,7 +51,7 @@ void exec_command(char *cmd)
 			exit(-1);
 		}
 	}
-	else 
+	else
 	{
 		wait(NULL);
 	}
