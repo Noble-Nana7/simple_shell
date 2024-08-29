@@ -10,14 +10,18 @@ void shell(void)
 
 	while (1)
 	{
+		if (isatty(STDIN_FILENO))
+		{
 		write(STDOUT_FILENO, PROMPT, strlen(PROMPT));
+		}
 
 		line = read_in();
 		if (line == NULL)
 		{
-			perror("read_in");
 			exit(1);
 		}
+
+		line = trim_ws(line);
 
 		if (line[0] != '\0')
 		{

@@ -9,6 +9,7 @@
 #include <fcntl.h>
 #include <string.h>
 #include <sys/wait.h>
+#include <ctype.h>
 
 #define PROMPT "Nana$ "
 
@@ -16,5 +17,6 @@
 void shell(void);
 void exec_command(char *cmd);
 char *read_in(void);
+char *trim_ws(char *str);
 
 #endif
