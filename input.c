@@ -44,7 +44,7 @@ void exec_command(char *cmd)
 	}
 	if (pid == 0)
 	{
-		if (execvp(cmd, argv) == -1)
+		if (execve(cmd, argv, NULL) == -1)
 		{
 			printerr(cmd);
 			exit(EXIT_FAILURE);
@@ -66,6 +66,11 @@ char *trim_ws(char *str)
 {
 	char *start = str;
 	char *end;
+
+	if (str == NULL || *str == '\0')
+	{
+		return (str);
+	}
 
 	while (isspace((unsigned char)*start))
 	{
