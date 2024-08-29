@@ -31,3 +31,13 @@ void shell(void)
 		free(line);
 	}
 }
+/**
+ * main - the entry
+ * Return: 0 Always success
+ */
+
+int main(void)
+{
+	shell();
+	return (0);
+}
