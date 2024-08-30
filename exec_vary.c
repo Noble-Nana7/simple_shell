@@ -94,6 +94,7 @@ void exec_copy_cmd(char *cmd)
 	char src[PATH_MAX];
 	char dest[PATH_MAX];
 	char *argv[2];
+	pid_t pid;
 
 	argv[0] = NULL;
 	argv[1] = NULL;
@@ -109,8 +110,16 @@ void exec_copy_cmd(char *cmd)
 		printerr("copy failed");
 		return;
 	}
+	argv[0] = dest;
 
-	if (fork() == 0)
+	pid = fork();
+	if (pid == -1)
+	{
+		printerr("fork failed");
+		return;
+	}
+
+	if (pid == 0)
 	{
 		if (execve(dest, argv, NULL) == -1)
 		{
