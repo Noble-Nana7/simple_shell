@@ -9,7 +9,11 @@
 
 void exec_command(char *cmd)
 {
-	if (is_cpy(cmd))
+	if (strcmp(cmd, "exit") == 0)
+	{
+		exec_exit();
+	}
+	else if (is_cpy(cmd))
 	{
 		exec_copy_cmd(cmd);
 	}

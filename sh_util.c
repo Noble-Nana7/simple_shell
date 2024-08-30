@@ -77,3 +77,23 @@ int is_path(char *cmd)
 {
 	return (strchr(cmd, '/') != NULL);
 }
+
+/**
+ * fexists - This func checks if the file exixts
+ * in the path.
+ * @path: the path to check for file
+ */
+int fexists(const char *path)
+{
+	return (access(path, F_OK) == 0);
+}
+
+/**
+ * isexec - this func checks if the file in
+ * path is executable.
+ * @path: the path to check for exe file.
+ */
+int isexec(const char *path)
+{
+	return (access(path, X_OK) == 0);
+}

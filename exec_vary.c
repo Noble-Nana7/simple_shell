@@ -133,3 +133,12 @@ void exec_copy_cmd(char *cmd)
 	}
 	remove(dest);
 }
+
+/**
+ * This func specifially handles exit
+ * and terminates the shell process.
+ */
+void exec_exit(void)
+{
+	exit(EXIT_SUCCESS);
+}
