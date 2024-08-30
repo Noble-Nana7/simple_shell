@@ -32,10 +32,18 @@ char *read_in(void)
 void exec_command(char *cmd)
 {
 	pid_t pid;
-	char *argv[2];
+	char *argv[100];
+	char *tok;
+	int i = 0;
 
-	argv[0] = cmd;
-	argv[1] = NULL;
+	tok = strtok(cmd, " ");
+	while (tok != NULL)
+	{
+		argv[i++] = tok;
+		tok = strtok(NULL,  " ");
+	}
+
+	argv[i] = NULL;
 
 	pid = fork();
 	if (pid == -1)
@@ -45,9 +53,9 @@ void exec_command(char *cmd)
 	}
 	if (pid == 0)
 	{
-		if (execve(cmd, argv, NULL) == -1)
+		if (execve(argv[0], argv, NULL) == -1)
 		{
-			printerr(cmd);
+			printerr(argv[0]);
 			exit(EXIT_FAILURE);
 		}
 	}
