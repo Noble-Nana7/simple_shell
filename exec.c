@@ -1,114 +1,25 @@
-/**
- * exec_command - This function executes a command
- * using execve.
- * @cmd: The command to execute
- */
-/**
-void exec_command(char *cmd)
-{
-	pid_t pid;
-	char *argv[100];
-	char *tok;
-	int i = 0;
-	char *cmdpath;
-
-	tok = strtok(cmd, " ");
-	while (tok != NULL)
-	{
-		argv[i++] = tok;
-		tok = strtok(NULL, " ");
-	}
-
-	argv[i] = NULL;
-
-	if (strchr(argv[0], '/') != NULL)
-	{
-		cmdpath = argv[0];
-		if (access(cmdpath, X_OK) != 0)
-		{
-			printerr(argv[0]);
-			return;
-		}
-	}
-	else
-	{
-		cmdpath = find_cmd(argv[0]);
-		if (!cmdpath)
-		{
-			printerr(argv[0]);
-			return;
-		}
-	}
-
-	pid = fork();
-	if (pid == -1)
-	{
-		printerr("fork");
-		exit(EXIT_FAILURE);
-	}
-	if (pid == 0)
-	{
-		if (execve(cmdpath, argv, NULL) == -1)
-		{
-			printerr(cmdpath);
-			exit(EXIT_FAILURE);
-		}
-	}
-	else
-	{
-		wait(NULL);
-	}
-
-	if (cmdpath != argv[0])
-	{
-		free(cmdpath);
-	}
-}
-*/
-
 #include "main.h"
 
 /**
- * exec_command - Executes a command using execve.
- * @cmd: The command to execute.
+ * exec_command - This command executes a command
+ * based on a specific
+ * implementation for handling using execve.
+ * @cmd: a particular command to exec
  */
+
 void exec_command(char *cmd)
 {
-	pid_t pid;
-	char *argv[100], *cmdpath = cmd, *tok;
-	int i = 0;
-
-	for (tok = strtok(cmd, " "); tok != NULL; tok = strtok(NULL, " "))
-		argv[i++] = tok;
-	argv[i] = NULL;
-
-	if (!strchr(argv[0], '/'))
+	if (is_cpy(cmd))
 	{
-		cmdpath = find_cmd(argv[0]);
-		if (!cmdpath)
-		{
-			printerr(argv[0]);
-			return;
-		}
+		exec_copy_cmd(cmd);
 	}
-
-	pid = fork();
-	if (pid == -1)
+	else if (is_path(cmd))
 	{
-		printerr("fork");
-		exit(EXIT_FAILURE);
+		exec_path_cmd(cmd);
 	}
-	if (pid == 0)
+	else 
 	{
-		if (execve(cmdpath, argv, NULL) == -1)
-		{
-			printerr(cmdpath);
-			exit(EXIT_FAILURE);
-		}
+		exec_std_cmd(cmd);
 	}
-	else
-		wait(NULL);
-
-	if (cmdpath != argv[0])
-		free(cmdpath);
 }
+ 
