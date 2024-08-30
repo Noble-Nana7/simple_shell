@@ -105,6 +105,6 @@ char *find_cmd(char *cmd)
 		pathdir = strtok(NULL, ":");
 	}
 
-	free (pathcpy);
+	free(pathcpy);
 	return (NULL);
 }
