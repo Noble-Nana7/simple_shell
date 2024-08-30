@@ -1,0 +1,37 @@
+
+ 32 void exec_command(char *cmd)
+ 33 {
+ 34     pid_t pid;
+ 35     char *argv[100];
+ 36     char *tok;
+ 37     int i = 0;
+ 38
+ 39     tok = strtok(cmd, " ");
+ 40     while (tok != NULL)
+ 41     {
+ 42         argv[i++] = tok;
+ 43         tok = strtok(NULL,  " ");
+ 44     }
+ 45
+ 46     argv[i] = NULL;
+ 47
+ 48     pid = fork();
+ 49     if (pid == -1)
+ 50     {
+ 51         printerr("fork");
+ 52         exit(EXIT_FAILURE);
+ 53     }
+ 54     if (pid == 0)
+ 55     {
+ 56         if (execve(argv[0], argv, NULL) == -1)
+ 57         {
+ 58             printerr(argv[0]);
+ 59             exit(EXIT_FAILURE);
+ 60         }
+ 61     }
+ 62     else
+ 63     {
+ 64         wait(NULL);
+ 65     }
+ 66 }
+ 67 */

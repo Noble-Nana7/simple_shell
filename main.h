@@ -20,5 +20,6 @@ void exec_command(char *cmd);
 char *read_in(void);
 char *trim_ws(char *str);
 void printerr(char *cmd);
+char *find_cmd(char *cmd);
 
 #endif

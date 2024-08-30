@@ -23,49 +23,6 @@ char *read_in(void)
 }
 
 /**
- * exec_command - This functions executes a command using
- * execve.
- * @cmd: The command to execute.
- */
-
-
-void exec_command(char *cmd)
-{
-	pid_t pid;
-	char *argv[100];
-	char *tok;
-	int i = 0;
-
-	tok = strtok(cmd, " ");
-	while (tok != NULL)
-	{
-		argv[i++] = tok;
-		tok = strtok(NULL,  " ");
-	}
-
-	argv[i] = NULL;
-
-	pid = fork();
-	if (pid == -1)
-	{
-		printerr("fork");
-		exit(EXIT_FAILURE);
-	}
-	if (pid == 0)
-	{
-		if (execve(argv[0], argv, NULL) == -1)
-		{
-			printerr(argv[0]);
-			exit(EXIT_FAILURE);
-		}
-	}
-	else
-	{
-		wait(NULL);
-	}
-}
-
-/**
  * trim_ws - Removes leading and trailing
  * whitespace from a string
  * @str: The string to trim
@@ -99,4 +56,55 @@ char *trim_ws(char *str)
 	end[1] = '\0';
 
 	return (start);
+}
+
+/**
+ * find_cmd - Searched for a command in the dirs
+ * listed in PATH.
+ * @cmd: The command to search
+ * Return: The full patth to the command if found,
+ * otherwise NULL.
+ */
+
+char *find_cmd(char *cmd)
+{
+	char *pathenv = getenv("PATH");
+	char *pathcpy;
+	char *pathdir, *fullpath;
+	size_t cmdlen, pathlen;
+
+	if (!pathenv)
+	{
+		return (NULL);
+	}
+	pathcpy = strdup(pathenv);
+	cmdlen = strlen(cmd);
+
+	pathdir = strtok(pathcpy, ":");
+	while (pathdir != NULL)
+	{
+		pathlen = strlen(pathdir);
+		fullpath = malloc(pathlen + cmdlen + 2);
+		if (!fullpath)
+		{
+			free(pathcpy);
+			return (NULL);
+		}
+
+		strcpy(fullpath, pathdir);
+		strcat(fullpath, "/");
+		strcat(fullpath, cmd);
+
+		if (access(fullpath, X_OK) == 0)
+		{
+			free(pathcpy);
+			return (fullpath);
+		}
+
+		free(fullpath);
+		pathdir = strtok(NULL, ":");
+	}
+
+	free (pathcpy);
+	return (NULL);
 }
