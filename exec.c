@@ -11,7 +11,7 @@ void exec_command(char *cmd)
 {
 	if (strcmp(cmd, "exit") == 0)
 	{
-		exec_exit();
+		exit(EXIT_SUCCESS);
 	}
 	else if (is_cpy(cmd))
 	{

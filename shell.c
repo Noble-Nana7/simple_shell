@@ -19,7 +19,7 @@ void shell(void)
 		line = read_in();
 		if (line == NULL)
 		{
-			exec_exit();
+			exit(EXIT_SUCCESS);
 		}
 
 		trline = trim_ws(line);

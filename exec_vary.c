@@ -11,7 +11,8 @@ void exec_std_cmd(char *cmd)
 	char *cmdpath;
 	char *argv[100];
 	char *tok;
-	int i = 0;
+	int i = 0, status;
+	pid_t pid;
 
 	tok = strtok(cmd, " ");
 	while (tok != NULL)
@@ -20,23 +21,35 @@ void exec_std_cmd(char *cmd)
 		tok = strtok(NULL, " ");
 	}
 	argv[i] = NULL;
-	cmdpath = find_cmd(cmd);
+	cmdpath = find_cmd(argv[0]);
 	if (!cmdpath)
 	{
-		printerr(cmd);
+		printerr(argv[0]);
 		return;
 	}
-	if (fork() == 0)
+	pid = fork();
+	if (pid == -1)
+	{
+		printerr("fork failed");
+		free(cmdpath);
+		exit(EXIT_FAILURE);
+	}
+	if (pid == 0)
 	{
 		if (execve(cmdpath, argv, NULL) == -1)
 		{
-			printerr(cmdpath);
+			printerr("execve failed");
 			exit(EXIT_FAILURE);
 		}
 	}
 	else
 	{
-		wait(NULL);
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
+		{
+			fprintf(stderr, "%s: cmd failed with stats %d\n",
+					argv[0], WEXITSTATUS(status));
+		}
 	}
 	free(cmdpath);
 }

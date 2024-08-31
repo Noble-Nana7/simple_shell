@@ -27,7 +27,7 @@ char *find_cmd(char *cmd);
 void exec_std_cmd(char *cmd);
 void exec_path_cmd(char *cmd);
 void exec_copy_cmd(char *cmd);
-void exec_exit(void);
+/* void exec_exit(void); */
 
 /* helper utils prototypes for exec func */
 int is_cpy(char *cmd);
