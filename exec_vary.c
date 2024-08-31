@@ -8,17 +8,14 @@
 
 void exec_std_cmd(char *cmd)
 {
-	char *cmdpath;
-	char *argv[100];
-	char *tok;
+	char *cmdpath, *tok, *argv[100];
 	int i = 0, status;
 	pid_t pid;
 
 	tok = strtok(cmd, " ");
 	while (tok != NULL)
 	{
-		argv[i++] = tok;
-		tok = strtok(NULL, " ");
+		argv[i++] = tok, tok = strtok(NULL, " ");
 	}
 	argv[i] = NULL;
 	cmdpath = find_cmd(argv[0]);
@@ -30,8 +27,7 @@ void exec_std_cmd(char *cmd)
 	pid = fork();
 	if (pid == -1)
 	{
-		printerr("fork failed");
-		free(cmdpath);
+		printerr("fork failed"), free(cmdpath);
 		exit(EXIT_FAILURE);
 	}
 	if (pid == 0)
