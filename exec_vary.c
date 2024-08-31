@@ -34,8 +34,8 @@ void exec_std_cmd(char *cmd)
 	{
 		if (execve(cmdpath, argv, NULL) == -1)
 		{
-			printerr("execve failed");
-			exit(EXIT_FAILURE);
+			printerr("execve failed"), free(cmdpath);
+			exit(127);
 		}
 	}
 	else
@@ -47,9 +47,11 @@ void exec_std_cmd(char *cmd)
 			fprintf(stderr, "%s: cmd failed with stats %d\n",
 					argv[0], ex_stat);
 		}
-		exit(ex_stat);
-	}
-	free(cmdpath);
+		free(cmdpath) ,exit(ex_stat);
+		else
+		{
+			free(cmdpath), exit(2);
+		}
 }
 
 /**
