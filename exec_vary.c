@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * exec_std_cmd - This function handles simple commands 
+ * exec_std_cmd - This function handles simple commands
  * typically found in "PATH".
  * @cmd: The command in PATH to handle.
  */
@@ -20,7 +20,6 @@ void exec_std_cmd(char *cmd)
 		tok = strtok(NULL, " ");
 	}
 	argv[i] = NULL;
-	
 	cmdpath = find_cmd(cmd);
 	if (!cmdpath)
 	{
@@ -35,7 +34,7 @@ void exec_std_cmd(char *cmd)
 			exit(EXIT_FAILURE);
 		}
 	}
-	else 
+	else
 	{
 		wait(NULL);
 	}
@@ -68,7 +67,6 @@ void exec_path_cmd(char *cmd)
 		printerr(cmd);
 		return;
 	}
-	
 	if (fork() == 0)
 	{
 		if (execve(cmd, argv, NULL) == -1)
@@ -77,7 +75,7 @@ void exec_path_cmd(char *cmd)
 			exit(EXIT_FAILURE);
 		}
 	}
-	else 
+	else
 	{
 		wait(NULL);
 	}
@@ -118,7 +116,6 @@ void exec_copy_cmd(char *cmd)
 		printerr("fork failed");
 		return;
 	}
-
 	if (pid == 0)
 	{
 		if (execve(dest, argv, NULL) == -1)
@@ -127,7 +124,7 @@ void exec_copy_cmd(char *cmd)
 			exit(EXIT_FAILURE);
 		}
 	}
-	else 
+	else
 	{
 		wait(NULL);
 	}
@@ -135,7 +132,7 @@ void exec_copy_cmd(char *cmd)
 }
 
 /**
- * This func specifially handles exit
+ * exec_exit - This func specifially handles exit
  * and terminates the shell process.
  */
 void exec_exit(void)

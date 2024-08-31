@@ -61,17 +61,19 @@ int copy_file(const char *src, const char *dest)
 /* EXEC UTILS */
 
 /**
- * is_cpycmd - func to handle copyomg if files
+ * is_cpy - func to handle copyomg if files
  * @cmd: The copy command
+ * Return: a integer
  */
 int is_cpy(char *cmd)
 {
-	return (strncmp(cmd, "cp_", 3)) == 0;
+	return (strncmp(cmd, "cp_", 3) == 0);
 }
 
 /**
- * is_pathcmd - func to handle path commands
+ * is_path - func to handle path commands
  * @cmd: The path command
+ * Return: an int
  */
 int is_path(char *cmd)
 {
@@ -82,6 +84,7 @@ int is_path(char *cmd)
  * fexists - This func checks if the file exixts
  * in the path.
  * @path: the path to check for file
+ * Return: The access to the file.
  */
 int fexists(const char *path)
 {
@@ -92,6 +95,7 @@ int fexists(const char *path)
  * isexec - this func checks if the file in
  * path is executable.
  * @path: the path to check for exe file.
+ * Return: An int
  */
 int isexec(const char *path)
 {

@@ -21,9 +21,8 @@ void exec_command(char *cmd)
 	{
 		exec_path_cmd(cmd);
 	}
-	else 
+	else
 	{
 		exec_std_cmd(cmd);
 	}
 }
- 
