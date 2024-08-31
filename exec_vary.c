@@ -9,7 +9,7 @@
 void exec_std_cmd(char *cmd)
 {
 	char *cmdpath, *tok, *argv[100];
-	int i = 0, status;
+	int i = 0, status, ex_stat;
 	pid_t pid;
 
 	tok = strtok(cmd, " ");
@@ -22,7 +22,7 @@ void exec_std_cmd(char *cmd)
 	if (!cmdpath)
 	{
 		printerr(argv[0]);
-		return;
+		exit(127);
 	}
 	pid = fork();
 	if (pid == -1)
@@ -41,11 +41,13 @@ void exec_std_cmd(char *cmd)
 	else
 	{
 		waitpid(pid, &status, 0);
-		if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
+		ex_stat = WEXITSTATUS(status);
+		if (WIFEXITED(status) && ex_stat != 0)
 		{
 			fprintf(stderr, "%s: cmd failed with stats %d\n",
-					argv[0], WEXITSTATUS(status));
+					argv[0], ex_stat);
 		}
+		exit(ex_stat);
 	}
 	free(cmdpath);
 }
