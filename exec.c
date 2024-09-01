@@ -7,12 +7,16 @@
  * @cmd: a particular command to exec
  */
 
-void exec_command(char *cmd)
+void exec_command(char *cmd, char **env)
 {
 	if (strcmp(cmd, "exit") == 0)
 	{
 		free(cmd);
 		exit(EXIT_SUCCESS);
+	}
+	else if (strcmp(cmd, "env") == 0)
+	{
+		pr_env(env);
 	}
 	else if (is_cpy(cmd))
 	{

@@ -16,7 +16,7 @@
 #define PATH_MAX 1024
 
 /* Function prototypes */
-void shell(char **env);
+void shell(void);
 void exec_command(char *cmd, char **env);
 char *read_in(void);
 char *trim_ws(char *str);
@@ -39,6 +39,6 @@ int isexec(const char *path);
 int copy_file(const char *src, const char *dest);
 
 /* The prototypes for env */
-void pr_env(char **envp);
+void pr_env(char **env);
 
 #endif

@@ -2,9 +2,10 @@
 
 /**
  * shell - The ,main loop of the shell
+ * @env: The environment varible
  */
 
-void shell(void)
+void shell(char **env)
 {
 	char *line;
 	char *trline;
@@ -26,7 +27,7 @@ void shell(void)
 
 		if (trline[0] != '\0')
 		{
-			exec_command(trline);
+			exec_command(trline, env);
 		}
 
 		free(line);
@@ -34,11 +35,17 @@ void shell(void)
 }
 /**
  * main - the entry
+ * @argc: The number of cli arg
+ * @argc: The cli arguments
+ * @envp: The enviornment var
  * Return: 0 Always success
  */
 
-int main(void)
+int main(int argc, char **argv, char **envp)
 {
-	shell();
+	(void)argc;
+	(void)argv;
+
+	shell(envp);
 	return (0);
 }
