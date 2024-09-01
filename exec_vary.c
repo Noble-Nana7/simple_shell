@@ -83,7 +83,7 @@ void exec_path_cmd(char *cmd)
 		if (execve(cmd, argv, NULL) == -1)
 		{
 			printerr(cmd);
-			exit(EXIT_FAILURE);
+			exit(2);
 		}
 	}
 	else
@@ -132,7 +132,7 @@ void exec_copy_cmd(char *cmd)
 		if (execve(dest, argv, NULL) == -1)
 		{
 			printerr(dest);
-			exit(EXIT_FAILURE);
+			exit(2);
 		}
 	}
 	else
