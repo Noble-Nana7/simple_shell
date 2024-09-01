@@ -41,12 +41,14 @@ void exec_std_cmd(char *cmd)
 	else
 	{
 		waitpid(pid, &status, 0);
+		free(cmdpath);
 		if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
 		{
 			fprintf(stderr, "%s: cmd failed with stats %d\n",
 					argv[0], WEXITSTATUS(status));
+			exit(2);
 		}
-		free(cmdpath);
+		exit(WEXITSTATUS(status));
 	}
 }
 
